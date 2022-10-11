@@ -4,8 +4,9 @@ using System.IO;
 using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Configuration;
 using ORM_Dapper;
+using Org.BouncyCastle.Crypto.Engines;
 //^^^^MUST HAVE USING DIRECTIVES^^^^
- namespace ORM_Dapper
+namespace ORM_Dapper
 {
     class Program
     {
@@ -20,16 +21,33 @@ using ORM_Dapper;
 
             IDbConnection conn = new MySqlConnection(connString);
 
-            var repo = new DapperDepartmentRepository(conn);
+            #region Departments
+            //var repo = new DapperDepartmentRepository(conn);
 
 
-            Console.WriteLine("Type a new department name");
-            var newDepartment = Console.ReadLine();
-            repo.InsertDepartment(newDepartment);
-            var departments = repo.GetAllDepartments();
-            foreach(var dept in departments)
+            //Console.WriteLine("Type a new department name");
+            //var newDepartment = Console.ReadLine();
+            //repo.InsertDepartment(newDepartment);
+            //var departments = repo.GetAllDepartments();
+            //foreach (var dept in departments)
+            //{
+            //    Console.WriteLine(dept.Name);
+            //}
+            #endregion
+
+            var productRepository = new DapperProductRepository(conn);  
+            var products = productRepository.GetAllProducts();
+
+            foreach (var product in products)
             {
-                Console.WriteLine(dept.Name);
+                Console.WriteLine("Product Name: " + product.Name);
+                Console.WriteLine("Product ProductID: " + product.ProductID);
+                Console.WriteLine("Product CategoryID: " + product.CategoryID);
+                Console.WriteLine("Product StockLevel: " + product.StockLevel);
+                Console.WriteLine("Product OnSale: " + product.OnSale);
+                Console.WriteLine("Product price: " + product.Price);
+                Console.WriteLine();
+                Console.WriteLine();
             }
         }
 
