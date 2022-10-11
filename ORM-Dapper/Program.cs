@@ -35,8 +35,20 @@ namespace ORM_Dapper
             //}
             #endregion
 
-            var productRepository = new DapperProductRepository(conn);  
+            var productRepository = new DapperProductRepository(conn);
+            
+            var productToUpdate = productRepository.GetProduct(945);
+
+            productToUpdate.Name = "Samantha test";
+            productToUpdate.OnSale = false;
+            productToUpdate.Price = 567;
+            productToUpdate.CategoryID = 1;
+            productToUpdate.StockLevel = 100;
+
+            productRepository.UpdateProduct(productToUpdate);
+
             var products = productRepository.GetAllProducts();
+
 
             foreach (var product in products)
             {
